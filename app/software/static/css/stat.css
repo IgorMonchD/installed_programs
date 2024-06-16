@@ -1,0 +1,97 @@
+
+.container {
+  display: flex;
+  border-radius: 20px 20px 20px 20px;
+  background-color: #ffffff;
+  margin-top: 10px;
+  margin-bottom: 20px
+}
+
+.left-section {
+  float: left;
+  width: 35%;
+}
+ 
+.right-section {
+  float: right;
+  width: 65%;
+}
+
+.third-section {
+  clear: both;
+  border-radius: 20px 20px 20px 20px;
+  background-color: #ffffff;
+  padding: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px
+}
+
+.list{
+list-style: none;
+padding: 0;
+}
+.list li {
+overflow: hidden;
+padding: 6px 10px;
+font-size: 20px;
+}
+.list li:first-child {
+font-weight: bold;
+color: #0074A3;
+font-size: 24px;
+}
+
+.list span {
+width: 75%;
+color: #7C7D7F;
+}
+.list em {
+color: #2a2725;
+font-weight: bold;
+}
+
+.search select{
+  border: 1px solid #ffffff;
+  font-size: 0.85vw;
+}
+
+.search form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.search select[name="inspection_tag"] {
+  height: 30px;
+  border-radius: 10px 0 0 10px;
+  outline: none;
+}
+
+.search select[name="inspection"] {
+  height: 30px;
+  border-left: none;
+  outline: none;
+}
+
+
+.search button[name = "search"] {
+  height: 30px;
+  border: none;
+  background: #0074A3;
+  border-radius: 0 10px 10px 0;
+  cursor: pointer;
+}
+
+.search button[name = "search"]:before {
+  content: "";
+  font-family: FontAwesome;
+  font-size: 16px;
+  color: #F9F0DA;
+}
+
+a {    
+  color: #fff;    
+  text-decoration: none;    
+} 
+

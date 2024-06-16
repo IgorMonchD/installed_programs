@@ -1,0 +1,189 @@
+.search label, select, input[type="text"]{
+  border: 1px solid #ffffff;
+  font-size: 0.85vw;
+}
+
+.search form {
+  display: flex;
+  flex-direction: row;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.search label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+.search label[type="first_label"] {
+  border-radius: 10px 0 0 10px;
+}
+
+.search label[type="second_label"] {
+  border-radius: 0 0 0 0;
+}
+
+.search span {
+  font-size: 0.85vw;
+  text-align: center;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  margin-right: 5px;
+  align-items: center;
+}
+
+.search select {
+  border-left: none;
+  outline: none;
+}
+
+.search input[type="checkbox"] {
+  height: 20px;
+  width: 20px;
+}
+
+.search input[type="checkbox"]:checked {
+  background-color: #ccc;
+}
+
+.search input[type="text"]{
+  flex-grow: 1;
+  border-left: none;
+  outline: none;
+  background: #fff;
+}
+
+.search button[name = "search"] {
+  border: none;
+  background: #0074A3;
+  border-radius: 0 10px 10px 0;
+  cursor: pointer;
+}
+
+.search button[name = "search"]:before {
+  content: "";
+  font-family: FontAwesome;
+  font-size: 16px;
+  color: #F9F0DA;
+}
+
+.search button[name = "export"] {
+  position: absolute;
+  height: 30px;
+  right: 20px;
+  border: none;
+  border-radius: 8px 8px 8px 8px;
+  color:#fff;
+  background: #0074A3;
+  justify-content: right;
+  align-items: right;
+  font-size: 0.85vw;
+  cursor: pointer;
+}
+
+.main-table:not(.nested-table) table { 
+  width: 100%; 
+  margin-bottom: 20px;
+  margin-top: 5px;
+}  
+
+.main-table:not(.nested-table) tr td { 
+  border-top: 1px solid #ddd; 
+}
+
+.main-table:not(.nested-table) thead th {  
+  text-align: left; 
+  border: none; 
+  padding: 10px 15px; 
+  background: #0074A3; 
+  font-size: 0.85vw; 
+  border-top: 1px solid #ddd; 
+}  
+
+.main-table:not(.nested-table) tr th:first-child, 
+.main-table:not(.nested-table) tr td:first-child { 
+  border-left: 1px solid #ddd; 
+}  
+
+.main-table:not(.nested-table) tr th:last-child, 
+.main-table:not(.nested-table) tr td:last-child { 
+  border-right: 1px solid #ddd;
+ 
+}  
+
+.main-table:not(.nested-table) thead tr th:first-child { 
+  border-radius: 20px 0 0 0; 
+}  
+
+.main-table:not(.nested-table) thead tr th:last-child { 
+  border-radius: 0 20px 0 0; 
+}  
+
+.main-table:not(.nested-table) tbody td { 
+  text-align: left; 
+  border: none; 
+  padding: 10px 15px; 
+  font-size: 12px; 
+  vertical-align: top; 
+}  
+
+.main-table:not(.nested-table) tbody tr:nth-child(even) { 
+  background: #F8F8F8; 
+}  
+
+.main-table:not(.nested-table) tbody tr:last-child td { 
+  border-bottom: 1px solid #ddd; 
+}  
+
+.nested-table  table {
+  padding-left: 24% !important;
+}
+.nested-table  thead th {  
+  padding: 5px 15px !important; 
+  background: #ffffff !important; 
+}  
+
+.nested-table thead tr th:first-child { 
+  border-radius: 0 0 0 0 !important; 
+}  
+
+.nested-table thead tr th:last-child { 
+  border-radius: 0 0 0 0 !important; 
+}  
+
+.nested-table thead th {
+  color: #5d656e;
+}
+
+#for-nested-table {
+  padding: 0;
+}
+
+.nested-table  table {
+  padding-left: 24% !important;
+  margin: 0 auto !important;
+}
+.nested-table  thead th {  
+  padding: 5px 15px !important; 
+  background: #ffffff !important; 
+}  
+
+.nested-table thead tr th:first-child { 
+  border-radius: 0 0 0 0 !important; 
+}  
+
+.nested-table thead tr th:last-child { 
+  border-radius: 0 0 0 0 !important; 
+}  
+
+.nested-table tr { 
+ border-bottom: 1px solid #ddd !important; 
+}  
+
+.nested-table tbody td { 
+  text-align: left; 
+  border-bottom: 1px solid #ddd !important; 
+}  

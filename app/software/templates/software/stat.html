@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Статистика{% endblock %}
+{% block link %}rel="stylesheet" href="{% static 'css/stat.css'%}" type="text/css"{% endblock %}
+{% block content %}
+<div class="wrapper"> 
+    <div class="search"> 
+        <form action="" method="GET">    
+            <select name="inspection_tag">  
+                <option value="0">Все</option>   
+                    {% for tag in tags %}  
+                <option value="{{ tag.id }}" {% if  tag.id == selected_tag %}selected{% endif %}>{{ tag.name }}</option>  
+                    {% endfor %}  
+            </select>   
+            <select name="inspection">  
+                <option value="0">Все</option>   
+                    {% for inspection in inspections %}   
+                <option value="{{ inspection.id }}" {% if  inspection.id == selected_inspection %}selected{% endif %}>{{ inspection.sono }}</option>   
+                    {% endfor %}   
+            </select>       
+            <button type="submit" name="search"><img src="{% static 'images/icon-search.png'%}"></button>  
+        </form>  
+    </div> 
+        <div class="container">
+            <div class="left-section">
+                <ul class="list">
+                    <li>Количество</li>
+                    <li><span>Установлено: </span><em>{{ total_program }}</em></li>
+                </ul>
+                <ul class="list">
+                    <li>Происхождение</li>
+                    {% for item in origin_data %}
+                    <li><span>{{ item.directory__origin__name }}: </span><em>{{ item.sum }}</em></li>
+                    {% endfor %}
+                </ul>
+                <ul class="list">
+                    <li>ПО типовой деятельности</li>
+                    {% for item in typical_activity %}
+                    <li><span>{{ item.directory__typical_activity__name }}: </span><em>{{ item.sum }}</em></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="right-section">
+                <ul class="list">
+                    <li>Категория программ</li>
+                    {% for item in program_category %}
+                    <li><span>{{ item.directory__program_category__name }}: </span><em>{{ item.sum }}</em></li>
+                    {% endfor %}
+                </ul>
+                <ul class="list">
+                    <li>Классы программ</li>
+                    {% for item in program_class %}
+                    <li><span>{{ item.directory__program_class__name }}: </span><em>{{ item.sum }}</em></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="third-section"> 
+            {{ image_html|safe }} 
+            {{ image_html_typical_activity|safe }} 
+            {{ image_html_program_category|safe }} 
+            {{ image_html_program_class|safe }} 
+        </div> 
+</div>
+{% endblock %}

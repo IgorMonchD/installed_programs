@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  web_dev:
+    container_name: django_dev
+    # Берем Dockerfile из каталога app
+    build: ./app
+    # Запускаем тестовый сервер
+    command: python manage.py runserver 0.0.0.0:8000
+    # куда будут помещены данные из каталога app
+    volumes:
+      - ./app/:/usr/src/app/
+    # Открываем порт 8000 внутри и снаружи
+    ports:
+      - 8000:8000
+    # Файл содержащий переменные для контейнера
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db_dev
+    networks:
+      dev_network:
+        ipv4_address: 172.18.2.2
+
+  db_dev:
+    container_name: postgresql_dev
+    # Образ и версия базы, которую мы будем использовать
+    image: postgres:12.0-alpine
+    command: postgres -c 'max_connections=5000'
+    # Внешний том(volume) и место где он будет подключен внутри контейнера
+    volumes:
+      - postgres_volume_dev:/var/lib/postgresql/data/
+    env_file:
+        - ./.env.dev.db
+    networks:
+      dev_network:
+        ipv4_address: 172.18.2.3
+
+# Отдельная сеть для разработки 
+networks:
+  dev_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.2.0/24
+# Том где хранятся база 
+volumes:
+  postgres_volume_dev:

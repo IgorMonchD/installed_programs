@@ -1,0 +1,86 @@
+body {
+  background-color: #f3f3f3;
+}
+.sidebar {  
+  width: 8%; 
+  height: 100%;   
+  background-color: #0074A3; 
+  position: fixed;
+  left: 0; 
+  top: 0;   
+  display: flex; 
+  flex-direction: column;   
+  float: left;
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.5)
+}
+.wrapper {  
+  float: right;
+  width: 92%;
+}
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.buttons form {
+  width: 100%;
+  margin-bottom: 0;
+}
+.buttons button {
+  font-size: 0.85vw;
+  color: white;
+  text-align: left; 
+}
+.buttons button { 
+  width: 100%; 
+  padding: 10px; 
+  margin-bottom: 10px; 
+  background-color: #0074A3; 
+  border: none; 
+  cursor: pointer; 
+} 
+.buttons button:hover {
+  background-color: #036b94;
+  color: #fff;
+}
+.full-width-button {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.logout { 
+  position: absolute; 
+  bottom: 10px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  text-decoration: none;
+  font-size: 1vw;
+}
+
+.pagination {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.85vw;
+}
+
+.pagination button {
+  height: 20px;
+  border: none;
+  color:rgb(0, 0, 0);
+  border-radius: 5px 5px 5px 5px;
+  background: #ddd;
+  cursor: pointer;
+}
+
+.highlight-select:active,
+.highlight-select:focus {
+  background-color: hsl(204, 70%, 91%);
+}
+
+a {    
+  color: #fff;    
+  text-decoration: none;    
+} 

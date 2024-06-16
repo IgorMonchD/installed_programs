@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Классификация{% endblock %}
+{% block link %}rel="stylesheet" href="{% static 'css/class.css'%}" type="text/css"{% endblock %}
+{% block content %}
+<div class="wrapper"> 
+  <div class="search">
+      <form method="GET">
+          <label>
+          </label>
+          <div class="no-flex">
+          <select name="inspection_tag" class="highlight-select"> 
+            <option value="0">Группы</option>  
+            {% for tag in tags %} 
+            <option value="{{ tag.id }}" {% if  tag.id == selected_tag %}selected{% endif %}>{{ tag.name }}</option> 
+            {% endfor %} 
+          </select>  
+          <select name="inspection" class="highlight-select"> 
+            <option value="0">ТНО</option>  
+            {% for inspection in inspections %}  
+            <option value="{{ inspection.id }}"{% if  inspection.id == selected_inspection %}selected{% endif %}>{{ inspection.sono }}</option>  
+            {% endfor %}  
+          </select>  
+          <select name="origin" class="highlight-select"> 
+            <option value="0">Происхождение</option>  
+            {% for origin in origins %}  
+            <option value="{{ origin.id }}"{% if origin.id == selected_origin %}selected{% endif %}>{{ origin.name }}</option>  
+            {% endfor %}  
+          </select> 
+            <select name="typical_activity" class="highlight-select">  
+            <option value="0">Типовое</option>  
+            {% for typical_activity in typical_activitys %}  
+            <option value="{{ typical_activity.id }}"{% if  typical_activity.id == selected_typical_activity %}selected{% endif %}>{{ typical_activity.name }}</option>  
+            {% endfor %}  
+          </select> 
+            <select name="program_category" class="highlight-select"> 
+            <option value="0">Категория</option>  
+            {% for program_category in program_categorys %}  
+            <option value="{{ program_category.id }}"{% if  program_category.id == selected_program_category %}selected{% endif %}>{{ program_category.name }}</option>  
+            {% endfor %}  
+          </select> 
+            <select name="program_class" class="highlight-select"> 
+            <option value="0">Класс</option>  
+            {% for program_class in program_classs %}  
+            <option value="{{ program_class.id }}"{% if  program_class.id == selected_program_class %}selected{% endif %}>{{ program_class.name }}</option>  
+            {% endfor %}  
+          </select>
+          </div>
+          <input type="text" name="search_query" placeholder="Поиск по названию" value="{{ request.GET.search_query }}">
+          <button type="submit" name="search"><img src="{% static 'images/icon-search.png'%}"></button> 
+          <button type="submit" name="export" onclick="location.href='?order_by={{ order_by }}&sort_by={{ sort_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&search_query={{ request.GET.search_query }}'">Экспорт</button>    
+    </form> 
+  </div> 
+  <div class="pagination"> 
+    <span class="step-links"> 
+      {% if data.has_previous %} 
+      <button onclick="location.href='?page=1&order_by={{ request.GET.order_by }}&sort_by={{ sort_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&search_query={{ request.GET.search_query }}&origin={{ selected_origin }}'"><<</button> 
+      <button onclick="location.href='?page={{ data.previous_page_number }}&order_by={{ request.GET.order_by }}&sort_by={{ sort_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&search_query={{ request.GET.search_query }}&origin={{ selected_origin }}'"><</button> 
+      {% endif %} 
+      <span class="current-page"> 
+        Страница {{ data.number }} из {{ data.paginator.num_pages }}  
+      </span> 
+      {% if data.has_next %} 
+      <button onclick="location.href='?page={{ data.next_page_number }}&order_by={{ request.GET.order_by }}&sort_by={{ sort_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&search_query={{ request.GET.search_query }}&origin={{ selected_origin }}'">></button> 
+      <button onclick="location.href='?page={{ data.paginator.num_pages }}&order_by={{ request.GET.order_by }}&sort_by={{ sort_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&search_query={{ request.GET.search_query }}&origin={{ selected_origin }}'">>></button> 
+      {% endif %} 
+    </span> 
+  </div> 
+  <div class="main-table"> 
+  <table>  
+    <thead>  
+      <tr>
+        <th style="width: 4%;"><a href="?search_query={{ request.GET.search_query }}&sort_by=inspection&order_by={{ order_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&origin={{ selected_origin }}">СОНО</a></th>
+        <th style="width: 15%;"><a href="?search_query={{ request.GET.search_query }}&sort_by=name&order_by={{ order_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}">Название</a></th>
+        <th style="width: 5%;"><a href="?search_query={{ request.GET.search_query }}&sort_by=version&order_by={{ order_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&origin={{ selected_origin }}">Версия</a></th>
+        <th style="width: 10%;"><a href="?search_query={{ request.GET.search_query }}&sort_by=publisher&order_by={{ order_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&origin={{ selected_origin }}">Издатель</a></th>
+        <th style="width: 5%;"><a href="?search_query={{ request.GET.search_query }}&sort_by=hostcount&order_by={{ order_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&origin={{ selected_origin }}">Кол-во</a></th>
+        <th style="width: 4%;"><a href="?search_query={{ request.GET.search_query }}&sort_by=directory__origin__name&order_by={{ order_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&origin={{ selected_origin }}">Происхождение</a></th>
+        <th style="width: 5%;"><a href="?search_query={{ request.GET.search_query }}&sort_by=directory__typical_activity__name&order_by={{ order_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&origin={{ selected_origin }}">Типовое</a></th>
+        <th style="width: 12%;"><a href="?search_query={{ request.GET.search_query }}&sort_by=directory__program_category__name&order_by={{ order_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&origin={{ selected_origin }}">Категория</a></th>
+        <th style="width: 20%;"><a href="?search_query={{ request.GET.search_query }}&sort_by=directory__program_class__name&order_by={{ order_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&origin={{ selected_origin }}">Класс</a></th>
+      </tr>
+  </thead> 
+  <tbody> 
+    {% for item in data %} 
+      <tr>
+        <td>{{ item.inspection }}</td>
+        <td>{{ item.name }}</td> 
+        <td>{{ item.version }}</td> 
+        <td>{{ item.publisher }}</td> 
+        <td>{{ item.hostcount }}</td>
+        <td>{{ item.directory.origin }}</td>
+        <td>{{ item.directory.typical_activity }}</td>
+        <td>{{ item.directory.program_category|default_if_none:"" }}</td>
+        <td>{{ item.directory.program_class|default_if_none:"" }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+</div>
+{% endblock %}
+

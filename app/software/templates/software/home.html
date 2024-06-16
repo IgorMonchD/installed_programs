@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Реестр программ{% endblock %}
+{% block link %}rel="stylesheet" href="{% static 'css/home.css'%}" type="text/css"{% endblock %}
+{% block content %}
+<div class="wrapper"> 
+  <div class="search">
+    <form method="GET">
+      <label type="first_label">
+      <input style="background-color: #ffffff;" type="checkbox" name="show_table" {% if request.GET.show_table == 'on' %}checked{% endif %}>
+      <span>Показать устройства</span>
+      </label>
+      <label type="second_label"> 
+        <input type="checkbox" name="exclude_zero" {% if request.GET.exclude_zero == 'on' %}checked{% endif %}> 
+        <span>Убрать нулевое количество</span> 
+      </label>      
+      <select name="inspection_tag" class="highlight-select"> 
+        <option value="0">Все</option>  
+        {% for tag in tags %} 
+        <option value="{{ tag.id }}" {% if  tag.id == selected_tag %}selected{% endif %}>{{ tag.name }}</option> 
+        {% endfor %} 
+      </select>  
+      <select name="inspection" class="highlight-select"> 
+        <option value="0">Все</option>  
+        {% for inspection in inspections %}  
+        <option value="{{ inspection.id }}"{% if  inspection.id == selected_inspection %}selected{% endif %}>{{ inspection.sono }}</option>  
+        {% endfor %}  
+      </select>  
+      <input type="text" name="search_query" placeholder="Поиск по названию" value="{{ request.GET.search_query }}">     
+      <button type="submit" name="search"><img src="{% static 'images/icon-search.png'%}"></button> 
+      <button type="submit" name="export" onclick="location.href='?order_by={{ order_by }}&sort_by={{ sort_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&search_query={{ request.GET.search_query }}&exclude_zero={{ exclude_zero }}'">Экспорт</button> 
+      </form> 
+  </div> 
+  <div class="pagination"> 
+    <span class="step-links"> 
+      {% if data.has_previous %} 
+      <button onclick="location.href='?page=1&order_by={{ request.GET.order_by }}&sort_by={{ sort_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&search_query={{ request.GET.search_query }}&show_table={{show_table}}&exclude_zero={{ exclude_zero }}'"><<</button> 
+      <button onclick="location.href='?page={{ data.previous_page_number }}&order_by={{ request.GET.order_by }}&sort_by={{ sort_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&search_query={{ request.GET.search_query }}&show_table={{ show_table }}&exclude_zero={{ exclude_zero }}'"><</button> 
+      {% endif %} 
+      <span class="current-page"> 
+        Страница {{ data.number }} из {{ data.paginator.num_pages }}  
+      </span>
+      {% if data.has_next %} 
+      <button onclick="location.href='?page={{ data.next_page_number }}&order_by={{ request.GET.order_by }}&sort_by={{ sort_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&search_query={{ request.GET.search_query }}&show_table={{ show_table }}&exclude_zero={{ exclude_zero }}'">></button> 
+      <button onclick="location.href='?page={{ data.paginator.num_pages }}&order_by={{ request.GET.order_by }}&sort_by={{ sort_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&search_query={{ request.GET.search_query }}&show_table={{ show_table }}&exclude_zero={{ exclude_zero }}'">>></button> 
+      {% endif %} 
+    </span> 
+  </div> 
+  <div class="main-table"> 
+  <table>  
+    <thead>  
+      <tr>
+        <th style="width: 4%;"><a href="?search_query={{ request.GET.search_query }}&sort_by=inspection&order_by={{ order_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&show_table={{show_table}}&exclude_zero={{exclude_zero}}">СОНО</a></th>
+        <th style="width: 20%;"><a href="?search_query={{ request.GET.search_query }}&sort_by=name&order_by={{ order_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&show_table={{show_table}}&exclude_zero={{exclude_zero}}">Название</a></th>
+        <th style="width: 5%;"><a href="?search_query={{ request.GET.search_query }}&sort_by=version&order_by={{ order_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&show_table={{show_table}}&exclude_zero={{exclude_zero}}">Версия</a></th>
+        <th style="width: 30%;"><a href="?search_query={{ request.GET.search_query }}&sort_by=publisher&order_by={{ order_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&show_table={{show_table}}&exclude_zero={{exclude_zero}}">Издатель</a></th>
+        <th style="width: 25%;"><a href="?search_query={{ request.GET.search_query }}&sort_by=arpregkey&order_by={{ order_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&show_table={{show_table}}&exclude_zero={{exclude_zero}}">Регистрационный ключ</a></th>
+        <th style="width: 10%;"><a href="?search_query={{ request.GET.search_query }}&sort_by=tmfirstappear&order_by={{ order_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&show_table={{show_table}}&exclude_zero={{exclude_zero}}">Дата первого появления</a></th>
+        <th style="width: 7%;"><a href="?search_query={{ request.GET.search_query }}&sort_by=hostcount&order_by={{ order_by }}&inspection={{ selected_inspection }}&inspection_tag={{ selected_tag }}&show_table={{show_table}}&exclude_zero={{exclude_zero}}">Кол-во</a></th>
+      </tr>
+  </thead> 
+  <tbody> 
+    {% for item in data %} 
+      <tr>
+        <td>{{ item.inspection }}</td>
+        <td>{{ item.name }}</td> 
+        <td>{{ item.version }}</td> 
+        <td>{{ item.publisher }}</td> 
+        <td>{{ item.arpregkey }}</td> 
+        <td>{{ item.tmfirstappear }}</td> 
+        <td>{{ item.hostcount }}</td>
+      </tr>
+       {% if request.GET.show_table == 'on' %}
+       <tr>
+          <td colspan="100%" id="for-nested-table">
+          <div class="nested-table">
+          <table>
+              <thead>
+                <tr>
+                  <th style="width: 20%;">Имя</th>
+                  <th style="width: 60%;">Папка установки</th>
+                  <th style="width: 20%;">Дата установки</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for installation in item.installation_set.all %}
+                  <tr>
+                    <td>{{ installation.host.hostname }}</td>
+                    <td>{{ installation.installdir }}</td>
+                    <td>{{ installation.installdate }}</td>
+                  </tr>
+                {% empty %}
+                  <tr>
+                    <td colspan="3">No data</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            </div>
+          </td>
+       </tr>
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+</div>
+{% endblock %}

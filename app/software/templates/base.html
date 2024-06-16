@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <link {% block link %} {% endblock %}>
+  <link rel="stylesheet" href="{% static 'css/base.css'%}" type="text/css">
+</head>
+<body>
+<div class="sidebar">
+  <div class="buttons">
+    <img style="width: 70%; height: auto;" src="{% static 'images/logo.svg'%}">
+    <form action="{% url 'home' %}" method="get">
+      <button class="full-width-button" type="submit">Реестр программ</button>
+    </form>
+    <form action="{% url 'class' %}" method="get">
+      <button class="full-width-button"  type="submit">Классификация</button>
+    </form>
+    <form action="{% url 'stat' %}" method="get">
+      <button class="full-width-button"  type="submit">Статистика</button>
+    </form>
+  </div>
+  <a href="{% url 'logout' %}" class="logout">Выход</a>
+</div>
+  {% block content %}{% endblock %}
+</body>
+</html>
