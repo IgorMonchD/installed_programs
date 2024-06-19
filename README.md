@@ -22,6 +22,7 @@
 Команды запускают контейнеры из описания контейнеров, определенного в файле docker-compose.yml и docker-compose.prod.yml, в фоновом режиме (-d) и перед запуском выполняет сборку образов контейнеров (--build).
 
 Миграция таблиц:
+
 **В продакшн**
 ```
 docker-compose -f docker-compose.prod.yml exec web python manage.py makemigrations &&
