@@ -21,6 +21,26 @@
 
 Команды запускают контейнеры из описания контейнеров, определенного в файле docker-compose.yml и docker-compose.prod.yml, в фоновом режиме (-d) и перед запуском выполняет сборку образов контейнеров (--build).
 
+Миграция таблиц:
+**В продакшн**
+```
+docker-compose -f docker-compose.prod.yml exec web python manage.py makemigrations &&
+docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput &&
+docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear
+```
+**В деплой**
+```
+docker-compose  exec web_dev python manage.py makemigrations
+docker-compose  exec web_dev  python manage.py migrate --noinput
+```
+Создание суперпользователя:
+1.  `docker-compose -f docker-compose.prod.yml exec web python manage.py createsuperuser`
+2.  `docker-compose  exec web_dev  python manage.py createsuperuser`
+
+
+Как только сервисы будут запущены и контейнеры подняты. Следует запустить процесс парсинга с API касперского:
+1.  `docker-compose  exec web_dev python /usr/src/app/parsing.py`
+2.  `docker-compose -f docker-compose.prod.yml exec web python /usr/src/app/parsing.py`
 
 Логическая модель базы данных, представлена в виде диаграммы ER (Entity-Relationship), которая отображает сущности, их атрибуты и связи между ними.
 ![image](https://github.com/IgorMonchD/installed_programs/assets/113885516/64e55372-c609-4d16-bac2-13baca6c61ca)
